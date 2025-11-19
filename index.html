@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐，李紫菥！</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 页面整体背景和样式 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000; /* 设置背景为黑色 */
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #ffcc00;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* 文字阴影 */
+            animation: slideIn 3s ease-out;
+        }
+
+        .message {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            color: #f8f9fa;
+            animation: fadeIn 4s ease-out;
+        }
+
+        .button {
+            background-color: #ff4c8d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #d63384;
+            transform: scale(1.1);
+        }
+
+        /* 标题的动画效果 */
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* 文字淡入动画 */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* 倒计时样式 */
+        .countdown {
+            font-size: 2rem;
+            color: #f8f9fa;
+            margin-top: 30px;
+            animation: fadeIn 5s ease-out;
+        }
+
+        /* 粒子背景效果 */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #ffcc00;
+            opacity: 0.7;
+            animation: particleAnimation 5s infinite;
+        }
+
+        /* 粒子动画 */
+        @keyframes particleAnimation {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>生日快乐，李紫菥！</h1>
+
+    <div class="message">
+        <p id="birthdayMessage">愿你在高三的奋斗中取得辉煌的成绩！</p>
+        <p>祝你每一天都充满阳光和笑容！🎂🎉</p>
+    </div>
+
+    <div class="countdown" id="countdown"></div> <!-- 显示倒计时 -->
+
+    <button class="button" onclick="showWish()">点击祝福</button>
+
+    <button class="button" onclick="changeMessage()">切换祝福语</button>
+
+    <!-- 音效 -->
+    <audio id="birthdayAudio">
+        <source src="happy_birthday.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- 粒子背景效果 -->
+    <div id="particles"></div>
+
+    <script>
+        // 倒计时
+        function updateCountdown() {
+            const targetDate = new Date("2025-12-31"); // 设置目标日期为生日
+            const currentDate = new Date();
+            const timeDiff = targetDate - currentDate;
+            const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            
+            document.getElementById("countdown").innerText = `离生日还有 ${daysLeft} 天！`;
+        }
+        setInterval(updateCountdown, 1000); // 每秒更新倒计时
+
+        // 祝福语切换
+        function changeMessage() {
+            const messages = [
+                "愿你的每一天都充满快乐和笑声！",
+                "祝你在新的一岁里更加智慧与勇敢！",
+                "愿你梦想成真，心想事成！",
+                "祝你每一个努力都开花结果，生活越来越精彩！"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("birthdayMessage").innerText = randomMessage;
+        }
+
+        // 播放生日祝福音效
+        function showWish() {
+            const audio = document.getElementById("birthdayAudio");
+            audio.play(); // 播放音频
+            alert("祝你生日快乐，李紫菥！🎉");
+        }
+
+        // 粒子背景动画
+        function createParticles() {
+            const numParticles = 50; // 粒子数量
+            const particlesContainer = document.getElementById('particles');
+
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.width = `${Math.random() * 10 + 5}px`; // 粒子大小随机
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * window.innerWidth}px`;
+                particle.style.top = `${Math.random() * window.innerHeight}px`;
+
+                // 给粒子添加运动方向
+                const xOffset = Math.random() * 300 - 150; // X轴随机偏移
+                const yOffset = Math.random() * 300 - 150; // Y轴随机偏移
+                particle.style.setProperty('--x', `${xOffset}px`);
+                particle.style.setProperty('--y', `${yOffset}px`);
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles(); // 创建粒子效果
+
+    </script>
+
+</body>
+</html>
